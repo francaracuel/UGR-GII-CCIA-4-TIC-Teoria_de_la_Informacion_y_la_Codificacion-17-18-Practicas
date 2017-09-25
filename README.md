@@ -1,2 +1,12 @@
-# UGR-GII-CCIA-4-TIC-Teor-a_de_la_Informacion_y_la_Codificacion-17-18-Practicas
-Práctica de asignatura TIC (4 curso) del grado en Ingeniería Informática, especialidad CCIA.
+# Prácticas TIC - 4º - UGR - CCIA - ETSIIT - GII
+
+Prácticas realizadas en la asignatura TIC (Teoría de la Información y la Codificación) del grado en Ingeniería Informática en el curso 2017/2018, UGR.
+
+## Autores
+
+Juan Manuel Fajardo Sarmiento
+
+Francisco Javier Caracuel Beltrán
+
+
+###### GNU General Public License v3.0
