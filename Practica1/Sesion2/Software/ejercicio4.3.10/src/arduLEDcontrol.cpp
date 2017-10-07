@@ -5,7 +5,7 @@
 //
 // TIC - 2017/2018 - 4º - GII - CCIA
 //
-// arduecho.cpp
+// arduLEDcontrol.cpp
 //
 // Programa para Arduino que recibe una cadena ON/OFF y enciende o apaga el led
 //
@@ -28,7 +28,7 @@
 
 int main(void) {
 
-    // Se establecen como entrada el pin 12
+    // Se establece como entrada el pin 12
     DDRB |= 0b00010000;
 
     // Inicialización del puerto UART con la velocidad
@@ -41,25 +41,28 @@ int main(void) {
 
     bool light = true;
 
-
     while (1) {
 
         char data[128] = "";
 
         arduReceiveUSB(data);
 
-        if (strcmp(data, "ON\0") == 0) {
+        if (strcmp(data, "On") == 0) {
 
             light = true;
             
-            strcpy(data, "LED apagado\0");
-
-        } else if (strcmp(data, "OFF\0") == 0) {
+            arduSendUSB("Led encendido");
+            
+        } else if (strcmp(data, "Off") == 0) {
 
             light = false;
             
-            strcpy(data, "LED apagado\0");
+            arduSendUSB("Led apagado");
 
+        } else{
+            
+            arduSendUSB("No entiendo la orden");
+            
         }
 
         if (light) {
@@ -75,8 +78,6 @@ int main(void) {
             _delay_ms(BLINK_DELAY_MS);
 
         }
-
-        arduSendUSB(data);
 
     }
 

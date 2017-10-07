@@ -5,7 +5,7 @@
 //
 // TIC - 2017/2018 - 4º - GII - CCIA
 //
-// pcecho.cpp
+// pcLedcontrol.cpp
 //
 // Programa para PC que envía datos a Arduino
 //
@@ -26,9 +26,25 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    int fd; // Descriptor de puerto del puerto USB
-    char buf[129]; // Buffer de salida. Tamaño máximo de 128 caracteres
-    int ndata; // Número de datos en el buffer
+    // Se comprueba si se ha recibido la orden por parámetro
+    if (argc != 2) {
+
+        cout << "\nError al ejecutar el programa...";
+        cout << "\nUso: " << argv[0] << " [On|Off]\n\n";
+
+        exit(-1);
+
+    }
+
+    // Descriptor de puerto del puerto USB
+    int fd;
+    
+    // Buffer de salida. Tamaño máximo de 128 caracteres
+    char *buf = argv[1];
+        
+    // Número de datos en el buffer
+    int ndata;
+    
     int aux;
 
     // Inicializamos puerto
@@ -41,43 +57,51 @@ int main(int argc, char *argv[]) {
     }
 
     // Bucle hasta que salgamos (cuando no introduzcamos nada)
-    do {
+    //do {
 
-        cout << "Escriba algo para enviar a Arduino: ";
-        cin.getline(buf, 128);
+        //cout << "Escriba algo para enviar a Arduino: ";
+        //cin.getline(buf, 128);
 
         ndata = strlen(buf); //Tamaño del buffer de salida
 
         if (ndata > 0) {
+            
             aux = write(fd, buf, ndata);
+            
             tcflush(fd, TCIFLUSH);
-            cout << "Bytes enviados " << aux << "/" << ndata << endl;
+            
+            cout << "\nBytes enviados " << aux << "/" << ndata << endl;
 
             // Comprobamos errores en el envío
             if (aux < ndata) {
-                cout << "Error, en el buffer tiene " << ndata << " bytes pero se enviaron " << aux << endl;
+                
+                //cout << "Error, en el buffer tiene " << ndata << " bytes pero se enviaron " << aux << endl;
                 ndata = 0;
+                
             }
 
             // Si se envió algun dato, esperamos respuesta de Arduino
             if (aux > 0) {
-                aux = read(fd, buf, 128);
+                
+                aux = receiveUSB(fd, buf);
+                
                 if (aux > 0)
-                    cout << "\tMensaje: " << buf << endl << endl;
+                    cout << "\nMensaje: " << buf << endl;
                 else
-                    cout << "\tERROR RECIBIENDO DATOS\n";
+                    cout << "ERROR RECIBIENDO DATOS\n";
+                
             }
+            
         }
 
         // Se sale si no enviamos ningún caracter
-    } while (ndata > 0);
-
+    //} while (ndata > 0);
 
     // Cerramos el puerto USB
-
     CerrarUSB(fd);
 
-
     cout << "\nFin del programa.\n\n";
+
     return 0;
+
 }

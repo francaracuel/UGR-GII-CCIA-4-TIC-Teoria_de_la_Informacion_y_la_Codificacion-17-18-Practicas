@@ -22,16 +22,16 @@ COMMPORT = $(MAC)
 COMMPORT = $(LINUX1)
 #COMMPORT = $(LINUX2)
 
-arduecho: arduechocpp uartcpp
+arduLEDcontrol: arduLEDcontrolcpp uartcpp
 	@echo Generando binario Arduino...
-	avr-gcc -mmcu=atmega328p obj/arduecho.o obj/uart.o -o obj/arduecho.bin
+	avr-gcc -mmcu=atmega328p obj/arduLEDcontrol.o obj/uart.o -o obj/arduLEDcontrol.bin
 	@echo Generando HEX Arduino...
-	avr-objcopy -O ihex -R .eeprom obj/arduecho.bin hex/arduecho.hex
+	avr-objcopy -O ihex -R .eeprom obj/arduLEDcontrol.bin hex/arduLEDcontrol.hex
 	@echo Arduecho compilado. Ejecute make send para enviarlo a la plataforma Arduino.
 
-arduechocpp:
-	@echo Compilando arduecho...
-	avr-gcc -Os -mmcu=atmega328p -c -o obj/arduecho.o src/arduecho.cpp -Iinclude
+arduLEDcontrolcpp:
+	@echo Compilando arduLEDcontrol...
+	avr-gcc -Os -mmcu=atmega328p -c -o obj/arduLEDcontrol.o src/arduLEDcontrol.cpp -Iinclude
 
 uartcpp:
 	@echo Compilando biblioteca UART...
@@ -39,18 +39,17 @@ uartcpp:
 
 
 send:
-	@echo Enviando arduecho a Arduino
-	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT) -b 115200 -U flash:w:hex/arduecho.hex
+	@echo Enviando arduLEDcontrol a Arduino
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT) -b 115200 -U flash:w:hex/arduLEDcontrol.hex
 
 
-pcecho: pcechocpp ticcommpccpp
-	@echo Generando fichero binario pcecho...
-	g++ -o bin/pcecho obj/pcecho.o obj/ticcommpc.o
+pcLEDcontrol: pcLEDcontrolcpp ticcommpccpp
+	@echo Generando fichero binario pcLEDcontrol...
+	g++ -o bin/pcLEDcontrol obj/pcLEDcontrol.o obj/ticcommpc.o
 
-pcechocpp:
+pcLEDcontrolcpp:
 	@echo Compilando PCECHO...
-	g++ -c -o obj/pcecho.o src/pcecho.cpp -Iinclude
-
+	g++ -c -o obj/pcLEDcontrol.o src/pcLEDcontrol.cpp -Iinclude
 
 ticcommpccpp:
 	@echo Compilando fuentes de biblioteca TICCommPC...
