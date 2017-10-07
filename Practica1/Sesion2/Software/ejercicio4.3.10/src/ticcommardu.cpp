@@ -19,7 +19,7 @@
 bool arduSendUSB(const char *data) {
 
     // Se obtiene el tamaño de la cadena
-    /*unsigned int length = strlen(data);
+    unsigned int length = strlen(data);
 
     unsigned int n = 0;
 
@@ -31,9 +31,9 @@ bool arduSendUSB(const char *data) {
 
         n++;
 
-    }*/
+    }
 
-    uart_puts(data);
+    //uart_puts(data);
 
 }
 

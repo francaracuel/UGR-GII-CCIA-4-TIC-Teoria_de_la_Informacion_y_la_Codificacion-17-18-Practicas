@@ -5,7 +5,7 @@
 //
 // TIC - 2017/2018 - 4º - GII - CCIA
 //
-// arduecho.cpp
+// ticcommpc.cpp
 //
 // Biblioteca para el manejo de datos con PC
 //
