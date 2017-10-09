@@ -22,7 +22,7 @@ COMMPORT = $(MAC)
 COMMPORT = $(LINUX1)
 #COMMPORT = $(LINUX2)
 
-emisorArdu: arduLEDcontrolcpp uartcpp
+emisorArdu: emisorArducpp uartcpp
 	@echo Generando binario Arduino emisor...
 	avr-gcc -mmcu=atmega328p obj/ticcommardu.o obj/uart.o obj/emisorArdu.o -o obj/emisorArdu.bin
 	@echo Generando HEX Arduino...
