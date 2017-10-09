@@ -145,20 +145,67 @@ bool arduReceiveByteUSB(unsigned char &data) {
 
 void initLaserEmitter() {
 
-    /* COMPLETAR CODIGO */
+    // Asumimos que está en el pin 12 de Arduino
+    DDRB |= _BV(DDB4);
+
+    // Ponemos salida a baja
+    PORTB &= ~_BV(DDB4);
 }
 
 void sendLaserBit(const unsigned char what) {
 
-    /* COMPLETAR CODIGO */
+    // Ponemos salida a alta si hay que enviar ráfaga
+    if (what != LASER_NONE)
+        PORTB |= _BV(DDB4);
+
+    // Esperamos el tiempo de ciclo
+    if (what != LASER_DASH)
+        _delay_ms(UMBRAL_U);
+    else
+        _delay_ms(2*UMBRAL_U);
+
+    // Ponemos salida a baja
+    PORTB &= ~_BV(DDB4);
+
+    // Y esperamos un ciclo
+    if (what != LASER_NONE)
+        _delay_ms(UMBRAL_U);
 }
 
 void initLaserReceiver() {
 
-    /* COMPLETAR CODIGO */
+    // Asumimos que está en el pin 8 de Arduino
+    DDRB &= ~_BV(DDB0);
 }
 
 void recvLaserBit(unsigned char & what) {
 
-    /* COMPLETAR CODIGO */
+    // Contador de veces que se detecta voltaje bajo y alto
+    unsigned char cBajo = 0;
+    unsigned char cAlto = 0;
+
+    // Dato a medir
+    unsigned char dato;
+
+    // Inicialmente suponemos que está en bajo
+    // Comprobamos si es mensaje LASER_NONE
+    do {
+
+        // Asumimos que está en el PIN 8
+        dato = PINB & 0x01;
+
+        if (dato > 0)
+            cAlto++;
+        else
+            cBajo++;
+
+        if (cBajo > 3){
+            what = LASER_NONE;
+            return;
+        }
+
+        // Esperamos al siguiente muestreo
+        _delay_ms(SAMPLE_PERIOD);
+
+    } while (datos ==0); 
 }
