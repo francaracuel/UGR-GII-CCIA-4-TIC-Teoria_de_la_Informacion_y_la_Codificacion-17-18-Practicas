@@ -14,7 +14,7 @@
 // Velocidad (en baudios) de las comunicaciones serie
 #define UART_BAUD_RATE 9600
 
-#include <ticcomardu.h>
+#include <ticcommardu.h>
 #include <avr/interrupt.h>
 #include <uart.h>
 
@@ -29,7 +29,7 @@ int main(void){
     
     // Inicialización del puerto UART con la velocidad en baudios del puerto
     // y la velocidad del procesador
-    uart_init(UART_BAUD_SELECT(UART_BAUD_RATE), F_CPU);
+    uart_init(UART_BAUD_SELECT(UART_BAUD_RATE, F_CPU));
     
     // Activación de las interrupciones hardware para control del puerto serie
     sei();

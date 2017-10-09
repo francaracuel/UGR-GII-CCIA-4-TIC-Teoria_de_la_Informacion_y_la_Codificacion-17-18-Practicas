@@ -19,7 +19,7 @@
 bool arduSendUSB(const char *data) {
 
     // Se obtiene el tamaño de la cadena
-    /*unsigned int length = strlen(data);
+    unsigned int length = strlen(data);
 
     unsigned int n = 0;
 
@@ -31,9 +31,9 @@ bool arduSendUSB(const char *data) {
 
         n++;
 
-    }*/
+    }
 
-    uart_puts(data);
+    //uart_puts(data);
 
 }
 
@@ -170,6 +170,7 @@ void sendLaserBit(const unsigned char what) {
     // Y esperamos un ciclo
     if (what != LASER_NONE)
         _delay_ms(UMBRAL_U);
+      
 }
 
 void initLaserReceiver() {
@@ -207,5 +208,5 @@ void recvLaserBit(unsigned char & what) {
         // Esperamos al siguiente muestreo
         _delay_ms(SAMPLE_PERIOD);
 
-    } while (datos ==0); 
+    } while (dato ==0); 
 }

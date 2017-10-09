@@ -22,7 +22,13 @@ COMMPORT = $(MAC)
 COMMPORT = $(LINUX1)
 #COMMPORT = $(LINUX2)
 
-emisorArdu: emisorArducpp uartcpp
+COMMPORT2 = $(MAC)
+COMMPORT2 = $(LINUX1)
+#COMMPORT2 = $(LINUX2)
+
+all: emisorArdu receptorArdu
+
+emisorArdu: ticcommarducpp emisorArducpp uartcpp
 	@echo Generando binario Arduino emisor...
 	avr-gcc -mmcu=atmega328p obj/ticcommardu.o obj/uart.o obj/emisorArdu.o -o obj/emisorArdu.bin
 	@echo Generando HEX Arduino...
@@ -37,7 +43,7 @@ receptorArdu: ticcommarducpp uartcpp receptorArducpp
 	@echo receptorArdu compilado. Ejecute make sendReceptor para enviarlo a la plataforma Arduino.
 
 emisorArducpp:
-	@echo Compilando emisorArdu receptor...
+	@echo Compilando emisorArdu...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/emisorArdu.o src/emisorArdu.cpp -Iinclude
 
 receptorArducpp:
@@ -51,6 +57,8 @@ ticcommarducpp:
 uartcpp:
 	@echo Compilando biblioteca UART...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/uart.o src/uart.cpp -Iinclude
+	
+send: sendEmisor sendReceptor
 
 sendEmisor:
 	@echo Enviando emisorArdu a Arduino
@@ -58,6 +66,6 @@ sendEmisor:
 
 sendReceptor:
 	@echo Eviando receptorArdu a Arduino
-	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT) -b 115200 -U flash:w:hex/receptorArdu.hex
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT2) -b 115200 -U flash:w:hex/receptorArdu.hex
 
 
