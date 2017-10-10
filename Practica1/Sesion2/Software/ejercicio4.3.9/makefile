@@ -22,6 +22,8 @@ COMMPORT = $(MAC)
 COMMPORT = $(LINUX1)
 #COMMPORT = $(LINUX2)
 
+all: arduLEDcontrol pcLEDcontrol send
+
 arduLEDcontrol: arduLEDcontrolcpp uartcpp
 	@echo Generando binario Arduino...
 	avr-gcc -mmcu=atmega328p obj/arduLEDcontrol.o obj/uart.o -o obj/arduLEDcontrol.bin
