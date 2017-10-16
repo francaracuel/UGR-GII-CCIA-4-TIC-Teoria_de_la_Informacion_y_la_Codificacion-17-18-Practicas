@@ -43,7 +43,7 @@ int main(void){
         n = 0;
         
         // Se rellena el buffer
-        for(int i=0; i<1000; i++){
+        for(int i=0; i<100; i++){
             
             // Se recibe el dato
             recvLaserBit(dato);

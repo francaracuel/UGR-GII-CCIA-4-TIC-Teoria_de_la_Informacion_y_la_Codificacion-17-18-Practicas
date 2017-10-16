@@ -209,4 +209,28 @@ void recvLaserBit(unsigned char & what) {
         _delay_ms(SAMPLE_PERIOD);
 
     } while (dato ==0); 
+    
+    // Si se llega aquí, está llegando una ráfaga
+    // Se comprobación si es ráfaga corta o larga
+    do{
+        
+        // Se asume que está en el  PIN 8
+        dato = PINB & 0x01;
+        
+        if(dato>0)
+            cAlto++;
+        
+        // Se espera al siguiente muestreo
+        _delay_ms(SAMPLE_PERIOD);
+                        
+    } while(dato == 1);
+    
+    // Si se ha muestreado más de 3 veces lo mismo, entonces es raya
+    if(cAlto>3)
+        what = LASER_DASH;
+   
+    // Si no, es un punto
+    else
+        what = LASER_DOT;
+    
 }

@@ -39,6 +39,8 @@ int main(int argc, char *argv[]){
         return 0;
     }
     
+    cout << "Comenzando a leer...\n" << endl;
+    
     // Bucle principal
     while(1){
         

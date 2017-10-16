@@ -15,18 +15,18 @@
 
 # Puerto de comunicaciones donde se encuentra Arduino.
 MAC = /dev/tty.usbmodem1411
-LINUX1 = /dev/ttyACM0
-LINUX2 = /dev/ttyACM1
+LINUX0 = /dev/ttyACM0
+LINUX1 = /dev/ttyACM1
 
 COMMPORT = $(MAC)
-COMMPORT = $(LINUX1)
-#COMMPORT = $(LINUX2)
+COMMPORT = $(LINUX0)
+#COMMPORT = $(LINUX1)
 
 COMMPORT2 = $(MAC)
-COMMPORT2 = $(LINUX1)
-#COMMPORT2 = $(LINUX2)
+COMMPORT2 = $(LINUX0)
+#COMMPORT2 = $(LINUX1)
 
-all: emisorArdu receptorArdu
+all: emisorArdu receptorArdu receptorPC
 
 emisorArdu: ticcommarducpp emisorArducpp uartcpp
 	@echo Generando binario Arduino emisor...
@@ -50,9 +50,21 @@ receptorArducpp:
 	@echo Compilando receptorArdu...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/receptorArdu.o src/receptorArdu.cpp -Iinclude
 
+receptorPC: receptorpccpp ticcommpccpp
+	@echo Generando fichero binario receptorPC...
+	g++ -o bin/receptorPC obj/receptorPC.o obj/ticcommpc.o
+
+receptorpccpp:
+	@echo Compilando receptorPC...
+	g++ -c -o obj/receptorPC.o src/receptorPC.cpp -Iinclude
+	
 ticcommarducpp:
 	@echo Compilando TICCommArdu...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/ticcommardu.o src/ticcommardu.cpp -Iinclude
+	
+ticcommpccpp:
+	@echo Compilando fuentes de biblioteca TICCommPC...
+	g++ -c -o obj/ticcommpc.o src/ticcommpc.cpp -Iinclude
 
 uartcpp:
 	@echo Compilando biblioteca UART...

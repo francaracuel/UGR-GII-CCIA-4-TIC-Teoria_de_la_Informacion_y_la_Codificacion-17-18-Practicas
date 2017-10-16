@@ -52,55 +52,59 @@ int main(void) {
 
     while(1){
         
-        // Se recoge el byte desde el puerto UART
-        c = uart_getc();
-                
-        // Flag sin datos activado. Se duerme
-        if (c & UART_NO_DATA) {
-            _delay_ms(1);
+        do{
+        
+            // Se recoge el byte desde el puerto UART
+            c = uart_getc();
 
-            // Error de recepción de la trama de datos. Se envía el mensaje
-        } else if (c & UART_FRAME_ERROR) {
+            // Flag sin datos activado. Se duerme
+            if (c & UART_NO_DATA) {
+                _delay_ms(1);
 
-            uart_puts_P("Error recibiendo trama.\n");
+                // Error de recepción de la trama de datos. Se envía el mensaje
+            } else if (c & UART_FRAME_ERROR) {
 
-            // Error de recepción de dato más rápido de lo que se pudo leer el
-            //anterior
-        } else if (c & UART_OVERRUN_ERROR) {
+                uart_puts_P("Error recibiendo trama.\n");
 
-            uart_puts_P("Error: La interrupción no pudo leer el dato antes de recibir el siguiente.\n");
+                // Error de recepción de dato más rápido de lo que se pudo leer el
+                //anterior
+            } else if (c & UART_OVERRUN_ERROR) {
 
-            // Error de recepción: Buffer lleno. No estamos leyendo tan rápido como
-            // nos envían
-        } else if (c & UART_BUFFER_OVERFLOW) {
+                uart_puts_P("Error: La interrupción no pudo leer el dato antes de recibir el siguiente.\n");
 
-            uart_puts_P("Error: El buffer está lleno. No se puede leer tan rápido como se envía\n");
+                // Error de recepción: Buffer lleno. No estamos leyendo tan rápido como
+                // nos envían
+            } else if (c & UART_BUFFER_OVERFLOW) {
 
-            // Todo ok. Se responde con el mismo carácter
-        } else {
+                uart_puts_P("Error: El buffer está lleno. No se puede leer tan rápido como se envía\n");
 
-            data[n] = (unsigned char)c;
-            n++;
-            //uart_putc((unsigned char)c);
+                // Todo ok. Se responde con el mismo carácter
+            } else {
 
-        }
+                data[n] = (unsigned char)c;
+                n++;
+                //uart_putc((unsigned char)c);
+
+            }
+            
+        } while(c!='\0');
               
         // Se comprueba qué se debe hacer con el led
         if (strcmp(data, "On") == 0) {
 
             light = true;
             
-            //strcpy(data, dataOn);
+            strcpy(data, dataOn);
             
         } else if (strcmp(data, "Off") == 0) {
 
             light = false;
             
-            //strcpy(data, dataOff);
+            strcpy(data, dataOff);
 
         } else{
             
-            //strcpy(data, dataNA);
+            strcpy(data, dataNA);
             
         }
 
@@ -108,13 +112,11 @@ int main(void) {
 
             // Se manda la señal de voltaje alto al pin 12 del puerto B
             PORTB |= 0b00010000;
-            _delay_ms(BLINK_DELAY_MS);
 
         } else {
 
             // Se manda la señal de voltaje bajo al pin 0 del puerto B
-            PORTB &= 0b00000000;
-            _delay_ms(BLINK_DELAY_MS);
+            PORTB &= 0b11101111;        
 
         }
         
@@ -123,7 +125,7 @@ int main(void) {
         n = 0;
 
         // Se recorre la cadena completa
-        while (n < length) {
+        while (n <= length) {
 
             // Se envía el carácter
             uart_putc(data[n]);
