@@ -21,7 +21,7 @@
 
 
 // Tiempo de ciclo para comunicaciones por láser, en milisegundos
-#define UMBRAL_U 150
+#define UMBRAL_U 15
 
 // Tiempo de muestreo
 #define SAMPLE_PERIOD (UMBRAL_U/3)

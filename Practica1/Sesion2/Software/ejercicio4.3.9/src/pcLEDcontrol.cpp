@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
 
         if (ndata > 0) {
             
-            aux = write(fd, buf, ndata);
+            aux = write(fd, buf, ndata+1);
             
             tcflush(fd, TCIFLUSH);
             
@@ -85,7 +85,15 @@ int main(int argc, char *argv[]) {
             if (aux > 0) {
                 
                 //aux = receiveUSB(fd, buf);
-                aux = read(fd, buf, 128);
+                unsigned int n= 0;
+                
+                do {
+                    
+                    aux = read(fd, buf+n, 128);
+                    
+                    n += aux;
+                    
+                } while (buf[n-1] != '\0');
                 
                 if (aux > 0)
                     cout << "\nMensaje: " << buf << endl;
