@@ -7,7 +7,7 @@
 //
 // arducodif.cpp
 //
-// Biblioteca para el manejo de datos con Arduino
+// Biblioteca para codificación de código Morse
 //
 ////////////////////////////////////////////////////////////////////////////////
 
