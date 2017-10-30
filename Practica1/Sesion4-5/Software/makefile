@@ -15,7 +15,9 @@
 
 # Puerto de comunicaciones donde se encuentra Arduino.
 MAC = /dev/tty.usbmodem1411
-LINUX0 = /dev/ttyACM0
+#LINUX0 = /dev/ttyACM0
+#LINUX1 = /dev/ttyACM1
+LINUX0 = /dev/ttyUSB0
 LINUX1 = /dev/ttyACM1
 
 COMMPORT = $(MAC)
@@ -24,20 +26,20 @@ COMMPORT = $(LINUX0)
 
 COMMPORT2 = $(MAC)
 COMMPORT2 = $(LINUX0)
-#COMMPORT2 = $(LINUX1)
+COMMPORT2 = $(LINUX1)
 
-all: emisorArdu receptorArdu emirsorPC receptorPC
+all: emisorArdu receptorArdu emirsorPC receptorPC send
 
-emisorArdu: ticcommarducpp emisorArducpp uartcpp
+emisorArdu: ticcommarducpp arducodifcpp uartcpp emisorArducpp
 	@echo Generando binario Arduino emisor...
-	avr-gcc -mmcu=atmega328p obj/ticcommardu.o obj/uart.o obj/emisorArdu.o -o obj/emisorArdu.bin
+	avr-gcc -mmcu=atmega328p obj/ticcommardu.o obj/arducodif.o obj/uart.o obj/emisorArdu.o -o obj/emisorArdu.bin
 	@echo Generando HEX Arduino...
 	avr-objcopy -O ihex -R .eeprom obj/emisorArdu.bin hex/emisorArdu.hex
 	@echo emisorArdu compilado. Ejecute make sendEmisor para enviarlo a la plataforma Arduino.
 
-receptorArdu: ticcommarducpp uartcpp receptorArducpp
+receptorArdu: ticcommarducpp arducodifcpp uartcpp receptorArducpp
 	@echo Generado binario Arduino...
-	avr-gcc -mmcu=atmega328p obj/ticcommardu.o obj/uart.o obj/receptorArdu.o -o obj/receptorArdu.bin
+	avr-gcc -mmcu=atmega328p obj/ticcommardu.o obj/arducodif.o obj/uart.o obj/receptorArdu.o -o obj/receptorArdu.bin
 	@echo Generando HEX Arduino receptor...
 	avr-objcopy -O ihex -R .eeprom obj/receptorArdu.bin hex/receptorArdu.hex
 	@echo receptorArdu compilado. Ejecute make sendReceptor para enviarlo a la plataforma Arduino.
@@ -73,6 +75,10 @@ ticcommarducpp:
 ticcommpccpp:
 	@echo Compilando fuentes de biblioteca TICCommPC...
 	g++ -c -o obj/ticcommpc.o src/ticcommpc.cpp -Iinclude
+
+arducodifcpp:
+	@echo Compilando ArduCodif...
+	avr-gcc -Os -mmcu=atmega328p -c -o obj/arducodif.o src/arducodif.cpp -Iinclude
 
 uartcpp:
 	@echo Compilando biblioteca UART...

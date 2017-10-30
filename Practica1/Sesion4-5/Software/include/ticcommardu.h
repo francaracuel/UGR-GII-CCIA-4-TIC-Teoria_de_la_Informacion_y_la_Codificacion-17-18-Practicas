@@ -20,7 +20,7 @@
 #define F_CPU 16000000UL
 
 // Tiempo de ciclo para comunicaciones por láser, en milisegundos
-#define UMBRAL_U 500
+#define UMBRAL_U 30
 
 // Tiempo de muestreo
 #define SAMPLE_PERIOD (UMBRAL_U/3)
@@ -37,15 +37,10 @@
 // Constante que representa ninguna ráfaga
 #define LASER_NONE 2
 
-
-
-
-
 /**
  * Inicializa el emisor de láser, apagándolo
  */
 void initLaserEmitter();
-
 
 /**
  * Función para enviar por láser un símbolo.
@@ -59,17 +54,10 @@ void initLaserEmitter();
  */
 void sendLaserBit(const unsigned char what);
 
-
-
-
-
-
-
 /**
  * Inicializa el receptor de láser
  */
 void initLaserReceiver();
-
 
 /**
  * Función para recibir un símbolo desde el fotorreceptor de láser.
@@ -85,10 +73,6 @@ void initLaserReceiver();
  */
 void recvLaserBit(unsigned char & what);
 
-
-
-
-
 /**
  * Función para enviar un mensaje por USB a PC
  *
@@ -98,9 +82,6 @@ void recvLaserBit(unsigned char & what);
  * Salidas: true si los datos se enviaron con éxito, false en otro caso
  */
 bool arduSendUSB(const char *data);
-
-
-
 
 /**
  * Función para recibir un mensaje por USB desde PC
@@ -112,7 +93,6 @@ bool arduSendUSB(const char *data);
  */
 bool arduReceiveUSB(char *data);
 
-
 /**
  * Función para enviar un byte por USB a PC
  *
@@ -123,9 +103,6 @@ bool arduReceiveUSB(char *data);
  */
 bool arduSendByteUSB(unsigned char data);
 
-
-
-
 /**
  * Función para recibir un mensaje por USB desde PC
  *
@@ -135,6 +112,5 @@ bool arduSendByteUSB(unsigned char data);
  *  en el parámetro data: Byte recibido
  */
 bool arduReceiveByteUSB(unsigned char &data);
-
 
 #endif

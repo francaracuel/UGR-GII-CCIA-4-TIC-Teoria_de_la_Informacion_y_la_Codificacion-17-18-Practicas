@@ -7,7 +7,7 @@
 //
 // emisorArdu.cpp
 //
-// Programa para Arduino que envía por el laser la cadena en Morse
+// Programa para Arduino que envía por el láser la cadena en Morse
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -35,47 +35,54 @@ int main(void){
 
         char data[100] = "";
 
+        // Se recibe el texto del emirsorPC
         arduReceiveUSB(data);
 
+        // Se guarda la longitud de la cadena
         unsigned int length = strlen(data);
 
-        char cad_decodif[100] = {0};
-        char codificado[100];
-        unsigned char utiles[100];
+        // Se crea el vector que contendrá la cadena codificada
+        char encoded[100];
 
-        codificador(data, length, codificado, utiles);
+        // Se guarda el número de bits válidos por cada Byte
+        unsigned char used[100];
+
+        codificador(data, length, encoded, used);
 
         //decodificador(codificado, utiles, length, cad_decodif);
 
         //cad_decodif[length] = '\0';
 
+        // Se recorre la cadena recibida
+        for(unsigned int i=0; i<length; i++){
 
-        
+            // Se recupera el Byte codificado y cuando comienza la codificación
+            char enc = encoded[i];
+            unsigned int us = used[i];
+
+            // Se recorren tantos bits como son utilizados
+            for (int j = 0 ; j != us ; j++) {
+
+                // Se comprueba si es un 0 o un 1. Si es un 0 se envía el láser
+                // corto. Si es 1 se envía el láser largo.
+                if((enc & (1 << j)) == 0){
+                    sendLaserBit(LASER_DOT);
+                } else{
+                    sendLaserBit(LASER_DASH);
+                }
+
+            }
+
+            // Cuando termina de enviarse una letra no se envía nada
+            sendLaserBit(LASER_NONE);
+
+        }
+
+        // Cuando se termina de enviar la palabra no se envía nada
+        sendLaserBit(LASER_NONE);
+
+        // Cuando se ha terminado de enviar la palabra se envía OK
         arduSendUSB("OK");
-
-
-
-        // Enviamos: ...
-        sendLaserBit(LASER_DOT);
-        sendLaserBit(LASER_DOT);
-        sendLaserBit(LASER_DOT);
-        sendLaserBit(LASER_NONE);
-
-        // Enviamos --
-        sendLaserBit(LASER_DASH);
-        sendLaserBit(LASER_DASH);
-        sendLaserBit(LASER_NONE);
-
-        // Enviamos: ...
-        sendLaserBit(LASER_DOT);
-        sendLaserBit(LASER_DOT);
-        sendLaserBit(LASER_DOT);
-        sendLaserBit(LASER_NONE);
-
-
-
-
-
 
 	}
 
