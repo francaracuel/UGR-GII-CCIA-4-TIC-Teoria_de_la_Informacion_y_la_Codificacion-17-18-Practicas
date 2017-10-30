@@ -26,6 +26,8 @@ using namespace std;
 /* MODIFICAR EL PUERTO CON AQUEL DONDE SE VAYA A CONECTAR ARDUINO */
 #define USBPORT0 "/dev/ttyACM0"
 #define USBPORT1 "/dev/ttyACM1"
+#define USBPORT0 "/dev/ttyUSB0"
+#define USBPORT1 "/dev/ttyUSB1"
 
 int main(int argc, char *argv[]) {
 
@@ -63,17 +65,41 @@ int main(int argc, char *argv[]) {
         }
 
         return 0;
-        
+
     }
 
     // Bucle hasta que salgamos (cuando no introduzcamos nada)
     do{
 
         cout << "Escriba algo para enviar a Arduino: ";
-        cin.getline(buf, 128);
+        cin.getline(buf, 100);
 
         // Tamaño del buffer de salida
         ndata = strlen(buf);
+
+        // Se comprueba si los carácteres recibidos son correctos
+        int i = 0;
+
+        while(i<ndata){
+
+            // Si el carácter está en minúscula, se convierte a mayúscula
+            if(buf[i] >= 'a' && buf[i] <= 'z'){
+                buf[i] = toupper(buf[i]);
+            }
+
+            // Si es algún carácter inválido se termina el programa
+            if(!((buf[i] >= 'A' && buf[i] <= 'Z') || buf[i] == '.' ||
+                buf[i] == ',' || buf[i] == ';'  || buf[i] == ' ' )){
+
+                cout << "Error al recibir caracteres inválidos" << endl;
+                ndata = 0;
+                aux = 0;
+
+            }
+
+            i++;
+
+        }
 
         if (ndata > 0) {
 
@@ -91,34 +117,14 @@ int main(int argc, char *argv[]) {
 
             }
 
-            // Se comprueba si los carácteres recibidos son correctos
-            int i = 0;
-
-            while(i<ndata){
-
-                // Si el carácter está en minúscula, se convierte a mayúscula
-                if(buf[i] >= 'a' && buf[i] <= 'z'){
-                    buf[i] = toupper(buf[i]);
-                }
-
-                // Si es algún carácter inválido se termina el programa
-                if(!((buf[i] >= 'A' && buf[i] <= 'Z') || buf[i] == '.' ||
-                    buf[i] == ',' || buf[i] == ';'  || buf[i] == ' ' )){
-
-                    cout << "Error al recibir caracteres inválidos" << endl;
-                    ndata = 0;
-                    aux = 0;
-
-                }
-
-                i++;
-
-            }
-
             // Si se envió algun dato, esperamos respuesta de Arduino
             if (aux > 0) {
 
-                aux = receiveUSB(fd, buf);
+                do{
+
+                    aux = receiveUSB(fd, buf);
+
+                }while(buf == "OK");
 
                 if (aux > 0)
                     cout << "\nMensaje: " << buf << endl;
