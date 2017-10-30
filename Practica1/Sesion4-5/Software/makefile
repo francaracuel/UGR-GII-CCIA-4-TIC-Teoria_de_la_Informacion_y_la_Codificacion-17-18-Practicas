@@ -26,7 +26,7 @@ COMMPORT2 = $(MAC)
 COMMPORT2 = $(LINUX0)
 #COMMPORT2 = $(LINUX1)
 
-all: emisorArdu receptorArdu receptorPC
+all: emisorArdu receptorArdu emirsorPC receptorPC
 
 emisorArdu: ticcommarducpp emisorArducpp uartcpp
 	@echo Generando binario Arduino emisor...
@@ -50,6 +50,14 @@ receptorArducpp:
 	@echo Compilando receptorArdu...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/receptorArdu.o src/receptorArdu.cpp -Iinclude
 
+emirsorPC: emirsorPCcpp ticcommpccpp
+	@echo Generando fichero binario emirsorPC...
+	g++ -o bin/emisorPC obj/emirsorPC.o obj/ticcommpc.o
+
+emirsorPCcpp:
+	@echo Compilando emirsorPC...
+	g++ -c -o obj/emirsorPC.o src/emisorPC.cpp -Iinclude
+
 receptorPC: receptorpccpp ticcommpccpp
 	@echo Generando fichero binario receptorPC...
 	g++ -o bin/receptorPC obj/receptorPC.o obj/ticcommpc.o
@@ -57,11 +65,11 @@ receptorPC: receptorpccpp ticcommpccpp
 receptorpccpp:
 	@echo Compilando receptorPC...
 	g++ -c -o obj/receptorPC.o src/receptorPC.cpp -Iinclude
-	
+
 ticcommarducpp:
 	@echo Compilando TICCommArdu...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/ticcommardu.o src/ticcommardu.cpp -Iinclude
-	
+
 ticcommpccpp:
 	@echo Compilando fuentes de biblioteca TICCommPC...
 	g++ -c -o obj/ticcommpc.o src/ticcommpc.cpp -Iinclude
@@ -69,7 +77,7 @@ ticcommpccpp:
 uartcpp:
 	@echo Compilando biblioteca UART...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/uart.o src/uart.cpp -Iinclude
-	
+
 send: sendEmisor sendReceptor
 
 sendEmisor:
@@ -79,5 +87,3 @@ sendEmisor:
 sendReceptor:
 	@echo Eviando receptorArdu a Arduino
 	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT2) -b 115200 -U flash:w:hex/receptorArdu.hex
-
-

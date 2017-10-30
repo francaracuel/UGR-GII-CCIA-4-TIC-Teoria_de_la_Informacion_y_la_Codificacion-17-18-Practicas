@@ -7,7 +7,7 @@
 //
 // arducodif.cpp
 //
-// Biblioteca para el manejo de datos con Arduino
+// Biblioteca para codificación de código Morse
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -17,7 +17,7 @@ void codificaSimboloMorse(const char corig, char &ccodif, unsigned char &nUtil){
 		case 'A':
 			ccodif = 0b00000001;
 			nUtil = 2;
-			break
+			break;
 		case 'B':
 			ccodif = 0b00001000;
 			nUtil = 4;
@@ -31,7 +31,7 @@ void codificaSimboloMorse(const char corig, char &ccodif, unsigned char &nUtil){
 			nUtil = 3;
 			break;
 		case 'E':
-			ccodif = 0b00000001;
+			ccodif = 0b00000000;
 			nUtil = 1;
 			break;
 		case 'F':
@@ -75,7 +75,7 @@ void codificaSimboloMorse(const char corig, char &ccodif, unsigned char &nUtil){
 			nUtil = 3;
 			break;
 		case 'P':
-			ccodif = 0b00001001;
+			ccodif = 0b00000110;
 			nUtil = 4;
 			break;
 		case 'Q':
@@ -139,10 +139,10 @@ void codificaSimboloMorse(const char corig, char &ccodif, unsigned char &nUtil){
 
 void decodificaSimboloMorse(const char ccodif, const unsigned char nUtils, char &decodif){
 
-	switch(nUtil){
+	switch(nUtils){
 		case 1:
 			switch(ccodif){
-				case 0b00000001:
+				case 0b00000000:
 					decodif = 'E';
 					break;
 				case 0b00000001:
@@ -217,7 +217,7 @@ void decodificaSimboloMorse(const char ccodif, const unsigned char nUtils, char 
 				case 0b00000100:
 					decodif = 'L';
 					break;
-				case 0b00001001:
+				case 0b00000110:
 					decodif = 'P';
 					break;
 				case 0b00001101:
@@ -261,11 +261,15 @@ void decodificaSimboloMorse(const char ccodif, const unsigned char nUtils, char 
 
 void codificador(const char *orig, const int nOrig, char *codif, unsigned char *util){
 
-
+	for (int i=0; i<nOrig; i++){
+		codificaSimboloMorse(orig[i], codif[i], util[i])
+	}
 }
 
 
 void decodificador(const char *codif, const unsigned char *utiles,  const  int nCodif, char *decodif){
 
-
+	for (int i=0; i<nCodif; i++){
+		decodificaSimboloMorse(codif[i], utiles[i], decodif[i])
+	}
 }
