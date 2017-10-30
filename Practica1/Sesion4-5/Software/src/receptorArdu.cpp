@@ -115,7 +115,7 @@ int main(void){
                 // Se aumenta la posición de la siguiente letra
                 i++;
 
-                arduSendUSB("Fin de letra");
+                //arduSendUSB("Fin de letra");
 
             // Dos LASER_NONE es que ha terminado de leerse el texto
             } else if(numLaserNone == 2){

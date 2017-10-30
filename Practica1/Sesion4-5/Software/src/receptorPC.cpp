@@ -22,12 +22,13 @@ using namespace std;
 
 // Puerto de comunicaciones con arduino
 #define USBPORT0 "/dev/ttyACM0"
-#define USBPORT1 "/dev/ttyACM1"
+#define USBPORT1 "/dev/ttyACM2"
 
 static volatile int keepRunning = 1;
 
 void intHandler(int dummy) {
     keepRunning = 0;
+    exit(0);
 }
 
 // Programa principal
