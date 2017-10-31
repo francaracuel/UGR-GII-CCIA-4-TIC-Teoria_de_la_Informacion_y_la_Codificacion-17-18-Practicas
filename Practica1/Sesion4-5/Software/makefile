@@ -28,11 +28,7 @@ COMMPORT2 = $(MAC)
 COMMPORT2 = $(LINUX0)
 COMMPORT2 = $(LINUX1)
 
-<<<<<<< HEAD:Practica1/Sesion4/Software/makefile
-all: emisorArdu receptorArdu emirsorPC receptorPC
-=======
 all: emisorArdu receptorArdu emirsorPC receptorPC send
->>>>>>> fran:Practica1/Sesion4-5/Software/makefile
 
 emisorArdu: ticcommarducpp arducodifcpp uartcpp emisorArducpp
 	@echo Generando binario Arduino emisor...

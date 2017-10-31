@@ -37,11 +37,7 @@ int main(int argc, char *argv[]){
 
     // Se lee el argumento recibido para cambiar el puerto del Arduino
     if(argc == 2 && atoi(argv[1]) == 1){
-<<<<<<< HEAD:Practica1/Sesion4/Software/src/receptorPC.cpp
-      port = 1;
-=======
         port = 1;
->>>>>>> fran:Practica1/Sesion4-5/Software/src/receptorPC.cpp
     }
 
     // Descriptor de fichero del puerto USB

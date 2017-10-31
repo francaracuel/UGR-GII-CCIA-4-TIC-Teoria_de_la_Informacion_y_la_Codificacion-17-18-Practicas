@@ -20,11 +20,7 @@
 #define F_CPU 16000000UL
 
 // Tiempo de ciclo para comunicaciones por láser, en milisegundos
-<<<<<<< HEAD:Practica1/Sesion4/Software/include/ticcommardu.h
-#define UMBRAL_U 500
-=======
 #define UMBRAL_U 30
->>>>>>> fran:Practica1/Sesion4-5/Software/include/ticcommardu.h
 
 // Tiempo de muestreo
 #define SAMPLE_PERIOD (UMBRAL_U/3)

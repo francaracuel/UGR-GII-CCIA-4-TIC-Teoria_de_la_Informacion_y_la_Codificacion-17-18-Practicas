@@ -265,26 +265,15 @@ void decodificaSimboloMorse(const char ccodif, const unsigned char nUtils, char 
 void codificador(const char *orig, const int nOrig, char *codif, unsigned char *util){
 
 	for (int i=0; i<nOrig; i++){
-<<<<<<< HEAD:Practica1/Sesion4/Software/src/arducodif.cpp
-		codificaSimboloMorse(orig[i], codif[i], util[i])
-	}
-=======
 		codificaSimboloMorse(orig[i], codif[i], util[i]);
 	}
 
->>>>>>> fran:Practica1/Sesion4-5/Software/src/arducodif.cpp
 }
 
 void decodificador(const char *codif, const unsigned char *utiles,  const  int nCodif, char *decodif){
 
 	for (int i=0; i<nCodif; i++){
-<<<<<<< HEAD:Practica1/Sesion4/Software/src/arducodif.cpp
-		decodificaSimboloMorse(codif[i], utiles[i], decodif[i])
-	}
-}
-=======
 		decodificaSimboloMorse(codif[i], utiles[i], decodif[i]);
 	}
 
 }
->>>>>>> fran:Practica1/Sesion4-5/Software/src/arducodif.cpp
