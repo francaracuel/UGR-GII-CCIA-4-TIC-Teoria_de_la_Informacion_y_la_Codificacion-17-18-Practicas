@@ -11,25 +11,16 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-#include <cstring>
 #include <ticcommpc.h>
 #include <iostream>
-#include <unistd.h>
-#include <termios.h>
-#include <signal.h>
 
 using namespace std;
 
 // Puerto de comunicaciones con arduino
-#define USBPORT0 "/dev/ttyACM0"
-#define USBPORT1 "/dev/ttyACM2"
-
-static volatile int keepRunning = 1;
-
-void intHandler(int dummy) {
-    keepRunning = 0;
-    exit(0);
-}
+//#define USBPORT0 "/dev/ttyACM0"
+//#define USBPORT1 "/dev/ttyACM1"
+#define USBPORT0 "/dev/ttyUSB0"
+#define USBPORT1 "/dev/ttyUSB1"
 
 // Programa principal
 int main(int argc, char *argv[]){
@@ -68,21 +59,17 @@ int main(int argc, char *argv[]){
 
     cout << "Comenzando a leer...\n" << endl;
 
-    signal(SIGINT, intHandler);
-
     // Bucle principal
-    while (keepRunning){
+    while (true){
 
         // Se leen datos del USB
         if(receiveUSB(fd, buf)){
 
-            cout << "Mensaje recibido: " << buf << endl;
-
-        } else{
-
-            cout << "\tError recibiendo datos\n\n";
-            CerrarUSB(fd);
-            return 0;
+            if(atoi(buf) == 0){
+                cout << "Sin luz, enciende las velas" << endl;
+            } else if(atoi(buf) == 1){
+                cout << "Hace sol, vamos a salir" << endl;
+            }
 
         }
 

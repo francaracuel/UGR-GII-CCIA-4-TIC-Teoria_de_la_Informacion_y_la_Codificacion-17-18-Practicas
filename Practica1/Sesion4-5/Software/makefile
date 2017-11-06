@@ -17,8 +17,8 @@
 MAC = /dev/tty.usbmodem1411
 #LINUX0 = /dev/ttyACM0
 #LINUX1 = /dev/ttyACM1
-LINUX0 = /dev/ttyUSB0
-LINUX1 = /dev/ttyACM1
+LINUX0 = /dev/ttyACM0
+LINUX1 = /dev/ttyACM2
 
 COMMPORT = $(MAC)
 COMMPORT = $(LINUX0)

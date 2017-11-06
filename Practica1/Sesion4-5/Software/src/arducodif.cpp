@@ -10,10 +10,11 @@
 // Biblioteca para codificación de código Morse
 //
 ////////////////////////////////////////////////////////////////////////////////
-
+#include <ctype.h>
+#include <stdlib.h>
 void codificaSimboloMorse(const char corig, char &ccodif, unsigned char &nUtil){
 
-	switch(corig){
+	switch(toupper(corig)){
 
 		case 'A':
 			ccodif = 0b00000001;

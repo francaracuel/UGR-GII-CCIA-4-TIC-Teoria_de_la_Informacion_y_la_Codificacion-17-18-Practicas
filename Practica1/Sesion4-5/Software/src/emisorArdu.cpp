@@ -38,6 +38,10 @@ int main(void){
         // Se recibe el texto del emirsorPC
         arduReceiveUSB(data);
 
+        //strcpy(data, "qwertyuioplkjhgfdsazxcvbnm,.; a");
+
+        //arduSendUSB(data);
+
         // Se guarda la longitud de la cadena
         unsigned int length = strlen(data);
 
@@ -47,8 +51,11 @@ int main(void){
         // Se guarda el número de bits válidos por cada Byte
         unsigned char used[100];
 
-        codificador(data, length, encoded, used);
+        //codificador(data, length, encoded, used);
 
+        //arduSendUSB(data);
+        //decodificador(encoded, used, length, data);
+        //arduSendUSB(data);
         //decodificador(codificado, utiles, length, cad_decodif);
 
         //cad_decodif[length] = '\0';
