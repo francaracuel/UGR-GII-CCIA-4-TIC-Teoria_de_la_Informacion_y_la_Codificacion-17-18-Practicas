@@ -14,19 +14,20 @@
 ################################################################################
 
 # Puerto de comunicaciones donde se encuentra Arduino.
-MAC = /dev/tty.usbmodem1411
+MAC0 = /dev/tty.usbmodem1411
+MAC1 = /dev/tty.usbmodem1431
 #LINUX0 = /dev/ttyACM0
 #LINUX1 = /dev/ttyACM1
 LINUX0 = /dev/ttyACM0
 LINUX1 = /dev/ttyACM2
 
-COMMPORT = $(MAC)
-COMMPORT = $(LINUX0)
+COMMPORT = $(MAC0)
+#COMMPORT = $(LINUX0)
 #COMMPORT = $(LINUX1)
 
-COMMPORT2 = $(MAC)
-COMMPORT2 = $(LINUX0)
-COMMPORT2 = $(LINUX1)
+COMMPORT2 = $(MAC1)
+#COMMPORT2 = $(LINUX0)
+#COMMPORT2 = $(LINUX1)
 
 all: emisorArdu receptorArdu emirsorPC receptorPC send
 
@@ -88,8 +89,8 @@ send: sendEmisor sendReceptor
 
 sendEmisor:
 	@echo Enviando emisorArdu a Arduino
-	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT) -b 115200 -U flash:w:hex/emisorArdu.hex
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT2) -b 115200 -U flash:w:hex/emisorArdu.hex
 
 sendReceptor:
 	@echo Eviando receptorArdu a Arduino
-	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT2) -b 115200 -U flash:w:hex/receptorArdu.hex
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P $(COMMPORT) -b 115200 -U flash:w:hex/receptorArdu.hex
