@@ -173,6 +173,18 @@ void sendLaserBit(const unsigned char what) {
 
 }
 
+void sendLaserBit2(const unsigned char what) {
+
+    // Ponemos salida a alta si hay que enviar un 1
+    if (what == LASER_HIGH)
+        PORTB |= _BV(DDB4);
+    else  // Ponemos a baja si se envia un 0
+        PORTB &= ~_BV(DDB4);
+
+    // Esperamos el tiempo de ciclo
+    _delay_ms(UMBRAL_U);
+}
+
 void initLaserReceiver() {
 
     // Asumimos que está en el pin 8 de Arduino
@@ -233,4 +245,42 @@ void recvLaserBit(unsigned char & what) {
     else
         what = LASER_DOT;
 
+}
+
+void recvLaserBit2(unsigned char & what) {
+
+    // Contador de veces que se detecta voltaje bajo y alto
+    unsigned char cBajo = 0;
+    unsigned char cAlto = 0;
+
+    // Tiempo midiendo
+    unsigned char tiempo = 0;
+
+    // Dato a medir
+    unsigned char dato;
+
+    // Pasamos un ciclo midiendo
+
+    while (tiempo < UMBRAL_U){
+
+        // Asumimos que está en el PIN 8
+        dato = PINB & 0x01;
+
+        if (dato>0)
+            cAlto++;
+        else
+            cBajo++;
+
+        // Esperamos el tiempo de muestreo
+        _delay_ms(SAMPLE_PERIOD);
+
+        // Aumentamos el tiempo que hemos estado en la función
+        tiempo += SAMPLE_PERIOD;
+    }
+
+    // Si hemos muestreado más altas que bajas, devolvemos LASER_HIGH
+    if (cAlto > cBajo)
+        what = LASER_HIGH;
+    else    // En otro caso, devolvemos LASER_LOW
+        what = LASER_LOW;
 }

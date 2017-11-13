@@ -55,6 +55,17 @@ void initLaserEmitter();
 void sendLaserBit(const unsigned char what);
 
 /**
+ * Función para enviar por láser un símbolo.
+ *
+ * Entradas:
+ *  what: Qué se envía. Puede ser uno de los valores siguientes:
+ *    LASER_HIGH para enviar un 1
+ *    LASER_LOW para enviar un 0
+ *
+ */
+void sendLaserBit2(const unsigned char what);
+
+/**
  * Inicializa el receptor de láser
  */
 void initLaserReceiver();
@@ -72,6 +83,19 @@ void initLaserReceiver();
  *
  */
 void recvLaserBit(unsigned char & what);
+
+/**
+ * Función para recibir un símbolo desde el fotorreceptor de láser.
+ *
+ * Entradas: Ninguna
+ *
+ * salidas
+ *  what: Qué se ha recibido. Puede ser uno de los valores siguientes:
+ *    LASER_HIGH para enviar un 1
+ *    LASER_LOW para enviar un 0
+ *
+ */
+void recvLaserBit2(unsigned char & what);
 
 /**
  * Función para enviar un mensaje por USB a PC
