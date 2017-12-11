@@ -44,6 +44,20 @@ receptorArdu: ticcommarducpp arducodifcpp uartcpp receptorArducpp
 	avr-objcopy -O ihex -R .eeprom obj/receptorArdu.bin hex/receptorArdu.hex
 	@echo receptorArdu compilado. Ejecute make sendReceptor para enviarlo a la plataforma Arduino.
 
+emisorArduInstantaneo: ticcommarducpp arducodifcpp uartcpp emisorArduInstantaneocpp
+	@echo Generando binario Arduino emisor...
+	avr-gcc -mmcu=atmega328p obj/ticcommardu.o obj/arducodif.o obj/uart.o obj/emisorArduInstantaneo.o -o obj/emisorArduInstantaneo.bin
+	@echo Generando HEX Arduino...
+	avr-objcopy -O ihex -R .eeprom obj/emisorArduInstantaneo.bin hex/emisorArduInstantaneo.hex
+	@echo emisorArduInstantaneo compilado. Ejecute make sendEmisor para enviarlo a la plataforma Arduino.
+
+receptorArduInstantaneo: ticcommarducpp arducodifcpp uartcpp receptorArduInstantaneocpp
+	@echo Generado binario Arduino...
+	avr-gcc -mmcu=atmega328p obj/ticcommardu.o obj/arducodif.o obj/uart.o obj/receptorArduInstantaneo.o -o obj/receptorArduInstantaneo.bin
+	@echo Generando HEX Arduino receptor...
+	avr-objcopy -O ihex -R .eeprom obj/receptorArduInstantaneo.bin hex/receptorArduInstantaneo.hex
+	@echo receptorArduInstantaneo compilado. Ejecute make sendReceptor para enviarlo a la plataforma Arduino.
+
 emisorArducpp:
 	@echo Compilando emisorArdu...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/emisorArdu.o src/emisorArdu.cpp -Iinclude
@@ -51,6 +65,14 @@ emisorArducpp:
 receptorArducpp:
 	@echo Compilando receptorArdu...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/receptorArdu.o src/receptorArdu.cpp -Iinclude
+
+emisorArduInstantaneocpp:
+	@echo Compilando emisorArduInstantaneo...
+	avr-gcc -Os -mmcu=atmega328p -c -o obj/emisorArduInstantaneo.o src/emisorArduInstantaneo.cpp -Iinclude
+
+receptorArduInstantaneocpp:
+	@echo Compilando receptorArduInstantaneo...
+	avr-gcc -Os -mmcu=atmega328p -c -o obj/receptorArduInstantaneo.o src/receptorArduInstantaneo.cpp -Iinclude
 
 emirsorPC: emirsorPCcpp ticcommpccpp
 	@echo Generando fichero binario emirsorPC...

@@ -37,6 +37,11 @@
 // Constante que representa ninguna ráfaga
 #define LASER_NONE 2
 
+// Constante que representa que el láser está encendido
+#define LASER_HIGH 1
+
+// Constante que representa que el láser está apagado
+#define LASER_LOW 0
 /**
  * Inicializa el emisor de láser, apagándolo
  */

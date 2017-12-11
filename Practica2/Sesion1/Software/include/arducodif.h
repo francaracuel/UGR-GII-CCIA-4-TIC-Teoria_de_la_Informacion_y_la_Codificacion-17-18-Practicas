@@ -23,4 +23,8 @@ void codificador(const char *orig, const int nOrig, char *codif, unsigned char *
 
 void decodificador(const char *codif, const unsigned char *utiles,  const  int nCodif, char *decodif);
 
+void codificador2(const char *orig, const int nOrig, char *codif, unsigned char *util);
+
+void decodificador2(const char *codif,  const  int nCodif, char *decodif);
+
 #endif

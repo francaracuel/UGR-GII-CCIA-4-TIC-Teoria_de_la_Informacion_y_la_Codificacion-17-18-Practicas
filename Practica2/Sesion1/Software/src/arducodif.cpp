@@ -263,6 +263,48 @@ void decodificaSimboloMorse(const char ccodif, const unsigned char nUtils, char 
 
 }
 
+void codificaSimboloInstantaneo(const char corig, char &ccodif, unsigned char &nUtil){
+
+	switch(toupper(corig)){
+
+		case 'A':
+			ccodif = 0b00000001;
+			nUtil = 1;
+			break;
+		case 'B':
+			ccodif = 0b00000010;
+			nUtil = 2;
+			break;
+		case 'C':
+			ccodif = 0b00000000;
+			nUtil = 3;
+			break;
+		case '\n':
+			ccodif = 0b00000100;
+			nUtil = 3;
+			break;
+	}
+}
+
+void decodificaSimboloInstantaneo(const char ccodif, char &decodif){
+	switch(ccodif){
+		case 0b00000001:
+			decodif = 'A';
+			break;
+		case 0b00000010:
+			decodif = 'B';
+			break;
+		case 0b00000000:
+			decodif = 'C';
+			break;
+		case 0b00000100:
+			decodif = '\n';
+			break;
+		default:
+			decodif = '1';
+	}
+}
+
 void codificador(const char *orig, const int nOrig, char *codif, unsigned char *util){
 
 	for (int i=0; i<nOrig; i++){
@@ -275,6 +317,22 @@ void decodificador(const char *codif, const unsigned char *utiles,  const  int n
 
 	for (int i=0; i<nCodif; i++){
 		decodificaSimboloMorse(codif[i], utiles[i], decodif[i]);
+	}
+
+}
+
+void codificador2(const char *orig, const int nOrig, char *codif, unsigned char *util){
+
+	for (int i=0; i<nOrig; i++){
+		codificaSimboloInstantaneo(orig[i], codif[i], util[i]);
+	}
+
+}
+
+void decodificador2(const char *codif,  const  int nCodif, char *decodif){
+
+	for (int i=0; i<nCodif; i++){
+		decodificaSimboloInstantaneo(codif[i], decodif[i]);
 	}
 
 }
