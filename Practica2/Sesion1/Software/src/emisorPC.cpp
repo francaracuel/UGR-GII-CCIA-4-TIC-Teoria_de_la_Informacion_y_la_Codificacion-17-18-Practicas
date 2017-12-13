@@ -24,12 +24,10 @@ using namespace std;
 // Puerto de comunicaciones con arduino
 
 /* MODIFICAR EL PUERTO CON AQUEL DONDE SE VAYA A CONECTAR ARDUINO */
-//#define USBPORT0 "/dev/ttyACM0"
-//#define USBPORT1 "/dev/ttyACM1"
+#define USBPORT0 "/dev/ttyACM0"
+#define USBPORT1 "/dev/ttyACM1"
 //#define USBPORT0 "/dev/ttyUSB0"
 //#define USBPORT1 "/dev/ttyUSB1"
-#define USBPORT0 "/dev/tty.usbmodem1411"
-#define USBPORT1 "/dev/tty.usbmodem1431"
 
 int main(int argc, char *argv[]) {
 
@@ -50,7 +48,7 @@ int main(int argc, char *argv[]) {
     int ndata;
 
     int aux;
-    
+
     // Inicializamos puerto
     if(port == 0){
       fd = InicializarUSB(USBPORT0);
