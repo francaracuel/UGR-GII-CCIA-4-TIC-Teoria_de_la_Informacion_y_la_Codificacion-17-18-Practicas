@@ -50,19 +50,19 @@ int main(void) {
         if (strcmp(data, "On") == 0) {
 
             light = true;
-            
+
             arduSendUSB("Led encendido");
-            
+
         } else if (strcmp(data, "Off") == 0) {
 
             light = false;
-            
+
             arduSendUSB("Led apagado");
 
         } else{
-            
+
             arduSendUSB("No entiendo la orden");
-            
+
         }
 
         if (light) {
@@ -74,7 +74,7 @@ int main(void) {
         } else {
 
             // Se manda la señal de voltaje bajo al pin 0 del puerto B
-            PORTB &= 0b00000000;
+            PORTB &= 0b11101111; 
             _delay_ms(BLINK_DELAY_MS);
 
         }
