@@ -29,7 +29,7 @@ COMMPORT2 = $(MAC1)
 #COMMPORT2 = $(LINUX0)
 #COMMPORT2 = $(LINUX1)
 
-all: emisorArdu receptorArdu emirsorPC receptorPC send
+all: emisorArdu receptorArdu emisorPC receptorPC send
 
 emisorArdu: ticcommarducpp arducodifcpp uartcpp emisorArducpp
 	@echo Generando binario Arduino emisor...
@@ -53,13 +53,13 @@ receptorArducpp:
 	@echo Compilando receptorArdu...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/receptorArdu.o src/receptorArdu.cpp -Iinclude
 
-emirsorPC: emirsorPCcpp ticcommpccpp
-	@echo Generando fichero binario emirsorPC...
-	g++ -o bin/emisorPC obj/emirsorPC.o obj/ticcommpc.o
+emisorPC: emisorPCcpp ticcommpccpp
+	@echo Generando fichero binario emisorPC...
+	g++ -o bin/emisorPC obj/emisorPC.o obj/ticcommpc.o
 
-emirsorPCcpp:
-	@echo Compilando emirsorPC...
-	g++ -c -o obj/emirsorPC.o src/emisorPC.cpp -Iinclude
+emisorPCcpp:
+	@echo Compilando emisorPC...
+	g++ -c -o obj/emisorPC.o src/emisorPC.cpp -Iinclude
 
 receptorPC: receptorpccpp ticcommpccpp
 	@echo Generando fichero binario receptorPC...
