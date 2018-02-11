@@ -85,7 +85,7 @@ int main(void){
        // sendLaserBit(LASER_NONE);
 
         // Cuando se ha terminado de enviar la palabra se envía OK
-        arduSendUSB("OK");
+        arduSendUSB("OK_pepito\0");
 
 	}
 

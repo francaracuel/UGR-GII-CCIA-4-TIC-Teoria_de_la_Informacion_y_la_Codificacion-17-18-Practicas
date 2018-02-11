@@ -17,8 +17,10 @@
 MAC = /dev/tty.usbmodem1411
 #LINUX0 = /dev/ttyACM0
 #LINUX1 = /dev/ttyACM1
+#LINUX0 = /dev/ttyACM0
+#LINUX1 = /dev/ttyACM2
 LINUX0 = /dev/ttyACM0
-LINUX1 = /dev/ttyACM2
+LINUX1 = /dev/ttyUSB0
 
 COMMPORT = $(MAC)
 COMMPORT = $(LINUX0)
@@ -28,7 +30,7 @@ COMMPORT2 = $(MAC)
 COMMPORT2 = $(LINUX0)
 COMMPORT2 = $(LINUX1)
 
-all: emisorArdu receptorArdu emirsorPC receptorPC send
+all: emisorArduInstantaneo receptorArduInstantaneo emisorPC receptorPC send
 
 emisorArdu: ticcommarducpp arducodifcpp uartcpp emisorArducpp
 	@echo Generando binario Arduino emisor...
@@ -74,13 +76,13 @@ receptorArduInstantaneocpp:
 	@echo Compilando receptorArduInstantaneo...
 	avr-gcc -Os -mmcu=atmega328p -c -o obj/receptorArduInstantaneo.o src/receptorArduInstantaneo.cpp -Iinclude
 
-emirsorPC: emirsorPCcpp ticcommpccpp
-	@echo Generando fichero binario emirsorPC...
-	g++ -o bin/emisorPC obj/emirsorPC.o obj/ticcommpc.o
+emisorPC: emisorPCcpp ticcommpccpp
+	@echo Generando fichero binario emisorPC...
+	g++ -o bin/emisorPC obj/emisorPC.o obj/ticcommpc.o
 
-emirsorPCcpp:
-	@echo Compilando emirsorPC...
-	g++ -c -o obj/emirsorPC.o src/emisorPC.cpp -Iinclude
+emisorPCcpp:
+	@echo Compilando emisorPC...
+	g++ -c -o obj/emisorPC.o src/emisorPC.cpp -Iinclude
 
 receptorPC: receptorpccpp ticcommpccpp
 	@echo Generando fichero binario receptorPC...

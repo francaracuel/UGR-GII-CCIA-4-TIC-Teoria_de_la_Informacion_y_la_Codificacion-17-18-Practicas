@@ -18,6 +18,7 @@
 #include <termios.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <sys/ioctl.h>
 
 using namespace std;
 
@@ -26,6 +27,8 @@ using namespace std;
 /* MODIFICAR EL PUERTO CON AQUEL DONDE SE VAYA A CONECTAR ARDUINO */
 #define USBPORT0 "/dev/ttyACM0"
 #define USBPORT1 "/dev/ttyACM1"
+//#define USBPORT0 "/dev/ttyUSB0"
+//#define USBPORT1 "/dev/ttyUSB1"
 //#define USBPORT0 "/dev/ttyUSB0"
 //#define USBPORT1 "/dev/ttyUSB1"
 
@@ -124,7 +127,7 @@ int main(int argc, char *argv[]) {
 
                     aux = receiveUSB(fd, buf);
 
-                    //cout << "\nMensaje: " << buf << endl;
+                    cout << "\nMensaje!!: " << buf << endl;
 
                 }while(buf == "OK");
 

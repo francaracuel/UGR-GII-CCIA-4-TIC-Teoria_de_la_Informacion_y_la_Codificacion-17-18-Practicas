@@ -72,7 +72,7 @@ int main(void){
         // Solo entra si está en estado recibiendo
         if (receiving){
 
-            
+
 
             // El data es un punto
             if (data == LASER_LOW){
@@ -103,7 +103,7 @@ int main(void){
                 i = 0;
 
                 // Se manda al pc la cadena decodificada
-                arduSendUSB(decode);
+                arduSendUSB("OOK");
 
                 arduSendUSB("Fin de texto");
 
